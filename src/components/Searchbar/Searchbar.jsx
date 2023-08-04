@@ -1,40 +1,38 @@
-import { Component } from "react";
+import { useState } from "react";
 import {TbPhotoSearch} from 'react-icons/tb'
 import { Container, SearchForm, SearchFormInput, SearchFormBbutton } from "./Searchbar.styled";
 import PropTypes from 'prop-types';
 
-export class Searchbar extends Component {
-    state = {
-        searchItem: '',
-    }
+export function Searchbar ({onFormSubmit}) {
+    const [searchItem, setSearchItem] = useState('');
 
-    handleSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
 
-        if (this.state.searchItem.trim() === '') {
+        if (searchItem.trim() === '') {
             alert('Please enter valid search item');
             return;
         }
 
-        this.props.onFormSubmit(this.state.searchItem);
-        this.setState({searchItem: ''});
+        onFormSubmit(searchItem);
+        setSearchItem('');
     }
 
-    handleItemChange = e => {
-        this.setState({searchItem: e.currentTarget.value.toLowerCase()});
+   const  handleItemChange = e => {
+        setSearchItem(e.currentTarget.value.toLowerCase());
     }
 
-    render() {
+   
         return (
             <Container>
-                <SearchForm role="search" onSubmit={this.handleSubmit}>
+                <SearchForm role="search" onSubmit={handleSubmit}>
                     <SearchFormInput
                         type="text"
                         autoComplete="off"
                         autoFocus
                         placeholder="Search images and photos"
-                        value={this.state.searchItem}
-                        onChange={this.handleItemChange}
+                        value={searchItem}
+                        onChange={handleItemChange}
                     />
                     <SearchFormBbutton type="submit">
                         <TbPhotoSearch style={{ marginRight: 8 }}/>
@@ -45,7 +43,7 @@ export class Searchbar extends Component {
       
         )
     }
-}
+
 
 Searchbar.propTypes = {
     onFormSubmit: PropTypes.func.isRequired,

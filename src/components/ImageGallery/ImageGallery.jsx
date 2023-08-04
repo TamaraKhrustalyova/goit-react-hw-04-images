@@ -4,6 +4,7 @@ import { ImageGalleryList } from "./ImageGallery.styled";
 import PropTypes from 'prop-types';
 
 export const ImageGallery = ({imagesToRender, onImageClick}) => {
+    console.log(imagesToRender)
     return (
         <ImageGalleryList>
             {imagesToRender.map(({id ,webformatURL, largeImageURL, tags}) =>   
